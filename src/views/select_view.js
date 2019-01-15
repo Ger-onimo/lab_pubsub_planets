@@ -5,11 +5,16 @@ const SelectView = function(element){
 };
 
 SelectView.prototype.bindEvents = function () {
-  PubSub.subscribe('SolarSystem:all-planets-ready', (event) => {
-    const allPlanets = event.detail;
-    this.populate(allPlanets);
+  this.element.addEventListener('click', (event) => {
+    console.log(event.target.id);
+    const selectedPlanet = event.target.id;
+    PubSub.publish('SelectView:click', selectedPlanet);
+
   });
-};
+
+}
+
+
 
 
 module.exports = SelectView;

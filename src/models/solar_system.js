@@ -5,8 +5,16 @@ const SolarSystem = function(planets) {
 };
 
 SolarSystem.prototype.bindEvents = function () {
-  PubSub.publish('SolarSystem:all-planets-ready', this.planets);
-
+  PubSub.subscribe('SelectView:click', (event) => {
+    const selectedPlanet = event.detail;
+    this.publishSolarSystemDetail(selectedPlanet);
+  });
 };
+
+SolarSystem.prototype.publishSolarSystemDetail = function (planetIndex) {
+  const selectedPlanet = this.planets[planetIndex];
+  PubSub.publish('SolarSystem:clicked-planet', selectedPlanet);
+};
+
 
 module.exports = SolarSystem;
